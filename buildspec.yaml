@@ -5,13 +5,12 @@ phases:
 
   pre_build:
     commands:
+     
       - AWS_DEFAULT_REGION="us-east-1"
       - IMAGE_PR_REF="public.ecr.aws/c7l4l0y6"
       - REPO_NAME="tomer-ecr"
+      - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
 
-      - echo "Login to ECR repository"
-
-      - aws ecr-public get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $IMAGE_PR_REF
 
 
 
@@ -20,7 +19,7 @@ phases:
       - echo "Build docker hello-app image"
       - docker build -t $REPO_NAME:latest .
       - docker tag $REPO_NAME:latest $IMAGE_PR_REF/$REPO_NAME:latest
-      - docker image ls
+      - aws ecr-public get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $IMAGE_PR_REF
 
   post_build:
     commands:

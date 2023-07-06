@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM public.ecr.aws/c7l4l0y6/tomer-ecr:py-buster
+FROM python:3.9-slim-buster
 
 # Set the working directory to /app
 WORKDIR /app
