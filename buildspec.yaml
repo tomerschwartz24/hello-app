@@ -5,13 +5,11 @@ phases:
 
   pre_build:
     commands:
-      - AWS_DEFAULT_REGION = "us-east-1"
-      - IMAGE_PR_REF = "public.ecr.aws/c7l4l0y6"
       - REPO_NAME = "tomer-ecr"
 
       - echo "Login to ECR repository"
 
-      - aws ecr-public get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $IMAGE_PR_REF
+      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/c7l4l0y6
 
 
 
