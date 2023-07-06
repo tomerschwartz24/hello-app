@@ -2,24 +2,30 @@ version: 0.2
 
 phases:
 
+
   pre_build:
     commands:
-      - IMAGE_REPO_NAME= public.ecr.aws/c7l4l0y6/tomer-ecr
+      - AWS_DEFAULT_REGION = "eu-west-1"
+      - IMAGE_PR_REF = "public.ecr.aws/c7l4l0y6"
+      - REPO_NAME = "tomer-ecr"
+
       - echo "Login to ECR repository"
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $IMAGE_REPO_NAME
+
+      - aws ecr-public get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $IMAGE_PR_REF
+
 
 
   build:
     commands:
       - echo "Build docker hello-app image"
-      - docker build -t $IMAGE_REPO_NAME:latest .
-      - docker tag $IMAGE_REPO_NAME:latest $IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker build -t $REPO_NAME:latest .
+      - docker tag $REPO_NAME:latest $REPO_NAME:$IMAGE_TAG
 
   post_build:
     commands:
       - echo "Push docker image to ECR"
-      - docker push $IMAGE_REPO_NAME:latest
-      - docker push $IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker push $REPO_NAME:latest
+      - docker push $REPO_NAME:$IMAGE_TAG
 
 artifacts:
   files:
