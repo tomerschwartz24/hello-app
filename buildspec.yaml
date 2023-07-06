@@ -18,7 +18,7 @@ phases:
     commands:
       - echo "Build docker hello-app image"
       - docker build -t $REPO_NAME:latest .
-      - docker tag $REPO_NAME:latest $IMAGE_PR_REF/$REPO_NAME:latest $IMAGE_PR_REF/$REPO_NAME:$CODEBUILD_BUILD_NUMBER
+      - docker tag $REPO_NAME:latest $IMAGE_PR_REF/$REPO_NAME:latest
       - docker tag $REPO_NAME:latest $IMAGE_PR_REF/$REPO_NAME:$CODEBUILD_BUILD_NUMBER
       - aws ecr-public get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $IMAGE_PR_REF
 
