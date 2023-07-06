@@ -5,10 +5,7 @@ phases:
 
   pre_build:
     commands:
-      - REPO_NAME = "tomer-ecr"
-
       - echo "Login to ECR repository"
-
       - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/c7l4l0y6
 
 
@@ -16,14 +13,14 @@ phases:
   build:
     commands:
       - echo "Build docker hello-app image"
-      - docker build -t $REPO_NAME:latest .
-      - docker tag $REPO_NAME:latest $REPO_NAME:$IMAGE_TAG
+      - docker build -t tomer-ecr:latest .
+      - docker tag tomer-ecr:latest tomer-ecr:$IMAGE_TAG
 
   post_build:
     commands:
       - echo "Push docker image to ECR"
-      - docker push $REPO_NAME:latest
-      - docker push $REPO_NAME:$IMAGE_TAG
+      - docker push tomer-ecr:latest
+      - docker push tomer-ecr:$IMAGE_TAG
 
 artifacts:
   files:
