@@ -5,7 +5,7 @@ phases:
 
   pre_build:
     commands:
-      - AWS_DEFAULT_REGION = "eu-west-1"
+      - AWS_DEFAULT_REGION = "us-east-1"
       - IMAGE_PR_REF = "public.ecr.aws/c7l4l0y6"
       - REPO_NAME = "tomer-ecr"
 
